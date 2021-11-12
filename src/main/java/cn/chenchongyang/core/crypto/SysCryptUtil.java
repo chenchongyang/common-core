@@ -1,31 +1,42 @@
+
 package cn.chenchongyang.core.crypto;
 
 import org.apache.commons.codec.DecoderException;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+
 public final class SysCryptUtil {
+
+    private static byte[] workKey;
 
     private SysCryptUtil() {
     }
 
+    public static void initWorkKeyAndVerifyDigest() {
+        byte[] rootKey = RootKeyUtil.getRootKey();
+        workKey = RootKeyUtil.getWorkKey(rootKey);
+    }
+
     public static String aesGcmEncrypt(String rawText) {
         try {
-            return AesUtil.encryptGCM(RootKeyUtil.getWorkKey0(), rawText);
-        } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | InvalidKeyException | BadPaddingException | IllegalBlockSizeException e) {
+            return AesUtil.encryptGCM(workKey, rawText);
+        } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException
+            | InvalidKeyException | BadPaddingException | IllegalBlockSizeException e) {
             throw new CryptoException(e);
         }
     }
 
     public static String aesGcmDecrypt(String encryptText) {
         try {
-            return AesUtil.decryptGCM(RootKeyUtil.getWorkKey0(), encryptText);
-        } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | InvalidKeyException | BadPaddingException | IllegalBlockSizeException | DecoderException e) {
+            return AesUtil.decryptGCM(workKey, encryptText);
+        } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException
+            | InvalidKeyException | BadPaddingException | IllegalBlockSizeException | DecoderException e) {
             throw new CryptoException(e);
         }
     }

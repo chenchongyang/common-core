@@ -1,11 +1,8 @@
+
 package cn.chenchongyang.core.crypto;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -17,6 +14,11 @@ import java.security.SignatureException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 /**
  * RSA算法工具
@@ -57,35 +59,35 @@ public final class RSAUtil {
     }
 
     public static String encryptByRSA(String rawText, String publicKey, String algorithm)
-            throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException,
-            BadPaddingException, IllegalBlockSizeException {
+        throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException,
+        BadPaddingException, IllegalBlockSizeException {
         Cipher cipher = Cipher.getInstance(algorithm);
         cipher.init(Cipher.ENCRYPT_MODE, getPublicKey(publicKey));
         return EncodeUtil.toBase64(cipher.doFinal(EncodeUtil.stringToByte(rawText)));
     }
 
     public static String encryptByRSAWithOAEP(String rawText, String publicKey)
-            throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException,
-            BadPaddingException, IllegalBlockSizeException {
+        throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException,
+        BadPaddingException, IllegalBlockSizeException {
         return encryptByRSA(rawText, publicKey, RSA_ALGORITHM_OAEP);
     }
 
     public static String decryptByRSA(String encryptText, String privateKey, String algorithm)
-            throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException,
-            BadPaddingException, IllegalBlockSizeException {
+        throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException,
+        BadPaddingException, IllegalBlockSizeException {
         Cipher cipher = Cipher.getInstance(algorithm);
         cipher.init(Cipher.DECRYPT_MODE, getPrivateKey(privateKey));
         return EncodeUtil.toString(cipher.doFinal(EncodeUtil.base64ToByte(encryptText)));
     }
 
     public static String decryptByRSAWithOAEP(String encryptText, String privateKey)
-            throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException,
-            BadPaddingException, IllegalBlockSizeException {
+        throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException,
+        BadPaddingException, IllegalBlockSizeException {
         return decryptByRSA(encryptText, privateKey, RSA_ALGORITHM_OAEP);
     }
 
     public static String signature(String rawText, String privateKey, String algorithm)
-            throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, SignatureException {
+        throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, SignatureException {
         Signature signature = Signature.getInstance(algorithm);
         signature.initSign(getPrivateKey(privateKey));
         signature.update(EncodeUtil.stringToByte(rawText));
@@ -93,12 +95,12 @@ public final class RSAUtil {
     }
 
     public static String signatureByPSS(String rawText, String privateKey)
-            throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, SignatureException {
+        throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, SignatureException {
         return signature(rawText, privateKey, SIGNATURE_RSA2_PSS);
     }
 
     public static boolean verify(String rawText, String publicKey, String sign, String algorithm)
-            throws InvalidKeySpecException, NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+        throws InvalidKeySpecException, NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         Signature signature = Signature.getInstance(algorithm);
         signature.initVerify(getPublicKey(publicKey));
         signature.update(EncodeUtil.stringToByte(rawText));
@@ -106,7 +108,7 @@ public final class RSAUtil {
     }
 
     public static boolean verifyByPSS(String rawText, String publicKey, String sign)
-            throws InvalidKeySpecException, NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+        throws InvalidKeySpecException, NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         return verify(rawText, publicKey, sign, SIGNATURE_RSA2_PSS);
     }
 
@@ -117,7 +119,7 @@ public final class RSAUtil {
     }
 
     private static PrivateKey getPrivateKey(String privateKey)
-            throws NoSuchAlgorithmException, InvalidKeySpecException {
+        throws NoSuchAlgorithmException, InvalidKeySpecException {
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(EncodeUtil.base64ToByte(privateKey));
         KeyFactory factory = KeyFactory.getInstance("RSA");
         return factory.generatePrivate(keySpec);

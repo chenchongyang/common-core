@@ -1,3 +1,4 @@
+
 package cn.chenchongyang.core.crypto;
 
 import java.security.NoSuchAlgorithmException;
@@ -16,8 +17,8 @@ public final class SecureRandomUtil {
 
     public static byte[] randomByte(int len) throws NoSuchAlgorithmException {
         byte[] b = new byte[len];
-//        linux下，该代码严重阻塞，具体原因请百度
-//        SecureRandom.getInstanceStrong().nextBytes(b);
+        // linux下，该代码严重阻塞，具体原因请百度
+        // SecureRandom.getInstanceStrong().nextBytes(b);
         SecureRandom.getInstance("SHA1PRNG").nextBytes(b);
         return b;
     }
