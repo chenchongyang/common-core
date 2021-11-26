@@ -20,7 +20,7 @@ public final class SysCryptUtil {
 
     public static void initWorkKeyAndVerifyDigest() {
         byte[] rootKey = RootKeyUtil.getRootKey();
-        workKey = RootKeyUtil.getWorkKey(rootKey);
+        workKey = RootKeyUtil.getWorkKey0(rootKey);
     }
 
     public static String aesGcmEncrypt(String rawText) {
@@ -41,16 +41,16 @@ public final class SysCryptUtil {
         }
     }
 
-    public static String decrypt(String encryptText) {
-        if (!encryptText.startsWith("encrypt")) {
-            return encryptText;
-        }
-
-        String[] split = encryptText.split(":");
-        String head = split[0];
-        String iv = split[1];
-        String data = split[2];
-
-        return "aa";
-    }
+    // public static String decrypt(String encryptText) {
+    // if (!encryptText.startsWith("encrypt")) {
+    // return encryptText;
+    // }
+    //
+    // String[] split = encryptText.split(":");
+    // String head = split[0];
+    // String iv = split[1];
+    // String data = split[2];
+    //
+    // return "aa";
+    // }
 }
