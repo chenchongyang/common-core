@@ -1,6 +1,8 @@
 
 package cn.chenchongyang.core.crypto;
 
+import cn.chenchongyang.core.CommonCoreException;
+import cn.chenchongyang.core.util.NumberUtil;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.HmacAlgorithms;
@@ -34,6 +36,8 @@ public class RootKeyUtil {
     private static final String ROOT_PART2 =
         "65AC434FD39278BA4E5249B7CC1BA1AF461927847F6B12DF5AA3CE35D5A1C97ACC81A16D31C8C70A6C076883DE5A2340521EEB39C8651CEFD066E899D19ACF7C264AF7782608793B58E57C53E5310B805380E4A17967DD8F58BA5371E459DE4D9A1E395010C2683703A35328138F26B5FFF888EA9C395CBE9277EE5874A4BE15";
 
+    private static Properties keysProperties;
+
     public static byte[] getRootKey() {
         byte[] root1 = EncodeUtil.hexToByte(ROOT_PART1);
         byte[] root2 = EncodeUtil.hexToByte(ROOT_PART2);
@@ -48,6 +52,7 @@ public class RootKeyUtil {
     }
 
     public static byte[] getWorkKey0(byte[] rootKey) {
+        loadKeysProperties();
         try {
             InputStream inputStream = RootKeyUtil.class.getClassLoader().getResourceAsStream("keys.properties");
             Properties properties = new Properties();
@@ -68,6 +73,10 @@ public class RootKeyUtil {
             | InvalidKeyException e) {
             throw new CryptoException("crypto err!", e);
         }
+    }
+
+    public static int getEncryptModel() {
+        return NumberUtil.toInt(keysProperties.getProperty("encrypt.model"));
     }
 
     /**
@@ -98,5 +107,15 @@ public class RootKeyUtil {
 
     private static int getMinLength(byte[] c1, byte[] c2, byte[] c3) {
         return Stream.of(c1.length, c2.length, c3.length).min(Comparator.comparingInt(o -> o)).get();
+    }
+
+    private static void loadKeysProperties() {
+        try {
+            InputStream inputStream = RootKeyUtil.class.getClassLoader().getResourceAsStream("keys.properties");
+            keysProperties = new Properties();
+            keysProperties.load(inputStream);
+        } catch (IOException e) {
+            throw new CommonCoreException("未检测到配置文件 keys.properties");
+        }
     }
 }
