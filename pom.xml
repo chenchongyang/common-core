@@ -4,7 +4,7 @@
 
     <groupId>cn.chenchongyang</groupId>
     <artifactId>common-core</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
 <!--        <version>0.0.1</version>-->
 
     <properties>
@@ -58,7 +58,7 @@
         <connection>scm:git:git@github.com:chenchongyang/common-core.git</connection>
         <developerConnection>scm:git:git@github.com:chenchongyang/common-core.git</developerConnection>
         <url>git@github.com:chenchongyang/common-core.git</url>
-      <tag>common-core-0.0.1</tag>
+      <tag>common-core-0.0.2</tag>
   </scm>
 
     <licenses>
