@@ -7,7 +7,7 @@
     <groupId>cn.chenchongyang</groupId>
     <artifactId>common-core</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-<!--    <version>0.0.1</version>-->
+<!--        <version>0.0.1</version>-->
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -73,6 +73,14 @@
         <profile>
             <id>release</id>
             <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/java</directory>
+                        <excludes>
+                            <exclude>**/*.properties</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
                 <plugins>
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
@@ -110,6 +118,17 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                        <version>2.5.3</version>
+                        <configuration>
+                            <autoVersionSubmodules>true</autoVersionSubmodules>
+                            <useReleaseProfile>false</useReleaseProfile>
+                            <releaseProfiles>release</releaseProfiles>
+                            <goals>deploy</goals>
+                        </configuration>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
