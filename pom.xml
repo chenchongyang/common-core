@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.chenchongyang</groupId>
     <artifactId>common-core</artifactId>
     <version>0.0.3-SNAPSHOT</version>
-<!--        <version>0.0.1</version>-->
+    <!--        <version>0.0.1</version>-->
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -49,8 +50,7 @@
     <developers>
         <developer>
             <name>chenchongyang</name>
-            <email>chen.chongyang@qq.com</email>
-            <organization>py</organization>
+            <email>252772909@qq.com</email>
         </developer>
     </developers>
 
@@ -58,8 +58,8 @@
         <connection>scm:git:git@github.com:chenchongyang/common-core.git</connection>
         <developerConnection>scm:git:git@github.com:chenchongyang/common-core.git</developerConnection>
         <url>git@github.com:chenchongyang/common-core.git</url>
-      <tag>common-core-0.0.1</tag>
-  </scm>
+        <tag>common-core-0.0.1</tag>
+    </scm>
 
     <licenses>
         <license>
